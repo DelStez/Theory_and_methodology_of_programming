@@ -8,14 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Lab_Work5
 {
     public partial class Form1 : Form
     {
+        //
         
         DrawGraph G;
-        List<Vertex> V;
-        List<Edge> E;
+        List<Vertex> Vertexlist = new List<Vertex>();
+        List<Edge> Edgelist;
         int[,] AMatrix;
         int w;
 
@@ -25,9 +27,9 @@ namespace Lab_Work5
         public Form1()
         {
             InitializeComponent();
-            V = new List<Vertex>();
+             
             G = new DrawGraph(workSpace.Width, workSpace.Height);
-            E = new List<Edge>();
+            Edgelist = new List<Edge>();
             workSpace.Image = G.GetMap();
 
         }
@@ -38,7 +40,7 @@ namespace Lab_Work5
             drawEdgeButton.Enabled = true;
             deleteButton.Enabled = true;
             G.clearSheet();
-            G.drawALLGraph(V, E);
+            G.drawALLGraph(Vertexlist, Edgelist);
             workSpace.Image = G.GetMap();
         }
 
@@ -48,7 +50,7 @@ namespace Lab_Work5
             drawVertexButton.Enabled = true;
             deleteButton.Enabled = true;
             G.clearSheet();
-            G.drawALLGraph(V, E);
+            G.drawALLGraph(Vertexlist, Edgelist);
             workSpace.Image = G.GetMap();
             selected1 = -1;
             selected2 = -1;
@@ -59,7 +61,7 @@ namespace Lab_Work5
             drawVertexButton.Enabled = true;
             drawEdgeButton.Enabled = true;
             G.clearSheet();
-            G.drawALLGraph(V, E);
+            G.drawALLGraph(Vertexlist, Edgelist);
             workSpace.Image = G.GetMap();
         }
         private void deleteALLButton_Click(object sender, EventArgs e)
@@ -67,8 +69,8 @@ namespace Lab_Work5
             drawVertexButton.Enabled = true;
             drawEdgeButton.Enabled = true;
             deleteButton.Enabled = true;
-            V.Clear();
-            E.Clear();
+            Vertexlist.Clear();
+            Edgelist.Clear();
             G.clearSheet();
             workSpace.Image = G.GetMap();
             
@@ -77,47 +79,43 @@ namespace Lab_Work5
 
         private void getData_Click(object sender, EventArgs e)
         {
-            AMatrix = new int[V.Count, V.Count];
+            // white = 0 grey = 1 black =2
+            AMatrix = new int[Vertexlist.Count, Vertexlist.Count];
             listPaths.Items.Clear();
             listMatrix.Items.Clear();
             string sOut = "    ";
-            G.fillAdjacencyMatrix(V.Count, E, AMatrix);
-            int[] color = new int[V.Count];
-            for (int k = 0; k < V.Count; k++)
-                color[k] = 0;
-            for (int i = 0; i < V.Count; i++)
+            G.fillAdjacencyMatrix(Vertexlist.Count, Edgelist, AMatrix);
+            int[] status = new int[Vertexlist.Count];
+            for (int k = 0; k < Vertexlist.Count; k++)
+                status[k] = 0;
+            foreach (Vertex q in Vertexlist)
             {
-                string s = "";
-                w = 0;
-                if (color[i] == 0)
-                    if (DFS(i, E, color,s))
-                    {
-                        
-                        listPaths.Items.Add(s);
-                    }
+                //if(q)
             }
-            for (int i = 0; i < V.Count; i++)
+            //for (int i = 0; i < V.Count; i++)
+            //{
+            //    string s = "";
+            //    w = 0;
+            //    if (color[i] == 0)
+            //        if (DFS(i, E, color,s))
+            //        {
+
+            //            listPaths.Items.Add(s);
+            //        }
+            //}
+            for (int i = 0; i < Vertexlist.Count; i++)
                 sOut += (i + 1) + " ";
-            for (int i = 0; i < V.Count; i++)
+            for (int i = 0; i < Vertexlist.Count; i++)
             {
                 sOut = (i + 1) + " | ";
-                for (int j = 0; j < V.Count; j++)
+                for (int j = 0; j < Vertexlist.Count; j++)
                     sOut += AMatrix[i, j] + " ";
                 listMatrix.Items.Add(sOut);
             }
         }
-        private bool DFS(int u, List<Edge> E, int[] color, string s)
+        private void DFS(int u, List<Edge> E, int[] color, string s)
         {
-            color[u] = 1;
-            // white = 0; grey = 1; black = 2
-            for (w = 0; w < E.Count; w++)
-            {
-
-                if(color[E[w].Vertex2] == 1) s += u.ToString() + "-" + (E[w].Vertex2 + 1).ToString();
-                if (color[E[w].Vertex2] == 1 && (DFS(u, E, color, s) == true)) return true; 
-            }
-            color[u] = 2;
-            return false;
+          
             //if (u != endV)
                 
             //else
@@ -146,8 +144,8 @@ namespace Lab_Work5
             
             if (drawVertexButton.Enabled == false)
             {
-                V.Add(new Vertex(e.X, e.Y));
-                G.DrawVertex(e.X, e.Y, V.Count.ToString());
+                Vertexlist.Add(new Vertex(e.X, e.Y));
+                G.DrawVertex(e.X, e.Y, Vertexlist.Count.ToString());
                 workSpace.Image = G.GetMap();
             }
             
@@ -155,23 +153,23 @@ namespace Lab_Work5
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    for (int i = 0; i < V.Count; i++)
+                    for (int i = 0; i < Vertexlist.Count; i++)
                     {
-                        if (Math.Pow((V[i].x - e.X), 2) + Math.Pow((V[i].y - e.Y), 2) <= G.R * G.R)
+                        if (Math.Pow((Vertexlist[i].x - e.X), 2) + Math.Pow((Vertexlist[i].y - e.Y), 2) <= G.R * G.R)
                         {
                             if (selected1 == -1)
                             {
-                                G.drawSelectedVertex(V[i].x, V[i].y);
+                                G.drawSelectedVertex(Vertexlist[i].x, Vertexlist[i].y);
                                 selected1 = i;
                                 workSpace.Image = G.GetMap();
                                 break;
                             }
                             if (selected2 == -1)
                             {
-                                G.drawSelectedVertex(V[i].x, V[i].y);
+                                G.drawSelectedVertex(Vertexlist[i].x, Vertexlist[i].y);
                                 selected2 = i;
-                                E.Add(new Edge(selected1, selected2));
-                                G.DrawEdge(V[selected1], V[selected2], E[E.Count - 1], E.Count - 1);
+                                Edgelist.Add(new Edge(selected1, selected2));
+                                G.DrawEdge(Vertexlist[selected1], Vertexlist[selected2], Edgelist[Edgelist.Count - 1], Edgelist.Count - 1);
                                 selected1 = -1;
                                 selected2 = -1;
                                 workSpace.Image = G.GetMap();
@@ -183,9 +181,9 @@ namespace Lab_Work5
                 if (e.Button == MouseButtons.Right)
                 {
                     if ((selected1 != -1) &&
-                        (Math.Pow((V[selected1].x - e.X), 2) + Math.Pow((V[selected1].y - e.Y), 2) <= G.R * G.R))
+                        (Math.Pow((Vertexlist[selected1].x - e.X), 2) + Math.Pow((Vertexlist[selected1].y - e.Y), 2) <= G.R * G.R))
                     {
-                        G.DrawVertex(V[selected1].x, V[selected1].y, (selected1 + 1).ToString());
+                        G.DrawVertex(Vertexlist[selected1].x, Vertexlist[selected1].y, (selected1 + 1).ToString());
                         selected1 = -1;
                         workSpace.Image = G.GetMap();
                     }
@@ -194,24 +192,24 @@ namespace Lab_Work5
             if (deleteButton.Enabled == false)
             {
                 bool flag = false;
-                for (int i = 0; i < V.Count; i++)
+                for (int i = 0; i < Vertexlist.Count; i++)
                 {
-                    if (Math.Pow((V[i].x - e.X), 2) + Math.Pow((V[i].y - e.Y), 2) <= G.R * G.R)
+                    if (Math.Pow((Vertexlist[i].x - e.X), 2) + Math.Pow((Vertexlist[i].y - e.Y), 2) <= G.R * G.R)
                     {
-                        for (int j = 0; j < E.Count; j++)
+                        for (int j = 0; j < Edgelist.Count; j++)
                         {
-                            if ((E[j].Vertex1 == i) || (E[j].Vertex2 == i))
+                            if ((Edgelist[j].Vertex1 == i) || (Edgelist[j].Vertex2 == i))
                             {
-                                E.RemoveAt(j);
+                                Edgelist.RemoveAt(j);
                                 j--;
                             }
                             else
                             {
-                                if (E[j].Vertex1 > i) E[j].Vertex1--;
-                                if (E[j].Vertex2 > i) E[j].Vertex2--;
+                                if (Edgelist[j].Vertex1 > i) Edgelist[j].Vertex1--;
+                                if (Edgelist[j].Vertex2 > i) Edgelist[j].Vertex2--;
                             }
                         }
-                        V.RemoveAt(i);
+                        Vertexlist.RemoveAt(i);
                         flag = true;
                         break;
                     }
@@ -219,27 +217,27 @@ namespace Lab_Work5
                 
                 if (!flag)
                 {
-                    for (int i = 0; i < E.Count; i++)
+                    for (int i = 0; i < Edgelist.Count; i++)
                     {
-                        if (E[i].Vertex1 == E[i].Vertex2)
+                        if (Edgelist[i].Vertex1 == Edgelist[i].Vertex2)
                         {
-                            if ((Math.Pow((V[E[i].Vertex1].x - G.R - e.X), 2) + Math.Pow((V[E[i].Vertex1].y - G.R - e.Y), 2) <= ((G.R + 2) * (G.R + 2))) &&
-                                (Math.Pow((V[E[i].Vertex1].x - G.R - e.X), 2) + Math.Pow((V[E[i].Vertex1].y - G.R - e.Y), 2) >= ((G.R - 2) * (G.R - 2))))
+                            if ((Math.Pow((Vertexlist[Edgelist[i].Vertex1].x - G.R - e.X), 2) + Math.Pow((Vertexlist[Edgelist[i].Vertex1].y - G.R - e.Y), 2) <= ((G.R + 2) * (G.R + 2))) &&
+                                (Math.Pow((Vertexlist[Edgelist[i].Vertex1].x - G.R - e.X), 2) + Math.Pow((Vertexlist[Edgelist[i].Vertex1].y - G.R - e.Y), 2) >= ((G.R - 2) * (G.R - 2))))
                             {
-                                E.RemoveAt(i);
+                                Edgelist.RemoveAt(i);
                                 flag = true;
                                 break;
                             }
                         }
                         else
                         {
-                            if (((e.X - V[E[i].Vertex1].x) * (V[E[i].Vertex2].y - V[E[i].Vertex1].y) / (V[E[i].Vertex2].x - V[E[i].Vertex1].x) + V[E[i].Vertex1].y) <= (e.Y + 4) &&
-                                ((e.X - V[E[i].Vertex1].x) * (V[E[i].Vertex2].y - V[E[i].Vertex1].y) / (V[E[i].Vertex2].x - V[E[i].Vertex1].x) + V[E[i].Vertex1].y) >= (e.Y - 4))
+                            if (((e.X - Vertexlist[Edgelist[i].Vertex1].x) * (Vertexlist[Edgelist[i].Vertex2].y - Vertexlist[Edgelist[i].Vertex1].y) / (Vertexlist[Edgelist[i].Vertex2].x - Vertexlist[Edgelist[i].Vertex1].x) + Vertexlist[Edgelist[i].Vertex1].y) <= (e.Y + 4) &&
+                                ((e.X - Vertexlist[Edgelist[i].Vertex1].x) * (Vertexlist[Edgelist[i].Vertex2].y - Vertexlist[Edgelist[i].Vertex1].y) / (Vertexlist[Edgelist[i].Vertex2].x - Vertexlist[Edgelist[i].Vertex1].x) + Vertexlist[Edgelist[i].Vertex1].y) >= (e.Y - 4))
                             {
-                                if ((V[E[i].Vertex1].x <= V[E[i].Vertex2].x && V[E[i].Vertex1].x <= e.X && e.X <= V[E[i].Vertex2].x) ||
-                                    (V[E[i].Vertex1].x >= V[E[i].Vertex2].x && V[E[i].Vertex1].x >= e.X && e.X >= V[E[i].Vertex2].x))
+                                if ((Vertexlist[Edgelist[i].Vertex1].x <= Vertexlist[Edgelist[i].Vertex2].x && Vertexlist[Edgelist[i].Vertex1].x <= e.X && e.X <= Vertexlist[Edgelist[i].Vertex2].x) ||
+                                    (Vertexlist[Edgelist[i].Vertex1].x >= Vertexlist[Edgelist[i].Vertex2].x && Vertexlist[Edgelist[i].Vertex1].x >= e.X && e.X >= Vertexlist[Edgelist[i].Vertex2].x))
                                 {
-                                    E.RemoveAt(i);
+                                    Edgelist.RemoveAt(i);
                                     flag = true;
                                     break;
                                 }
@@ -250,7 +248,7 @@ namespace Lab_Work5
                 if (flag)
                 {
                     G.clearSheet();
-                    G.drawALLGraph(V, E);
+                    G.drawALLGraph(Vertexlist, Edgelist);
                     workSpace.Image = G.GetMap();
                 }
             }

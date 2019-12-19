@@ -5,20 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+public enum VertexStatus { White, Gray, Black }
 namespace Lab_Work5
 {
     class Vertex
     {
         public int x, y;
+        public VertexStatus status = VertexStatus.White;
         public Vertex(int x, int y)
         {
             this.x = x;
             this.y = y;
+            this.status = VertexStatus.White;
         }
     }
     class Edge
     {
         public int Vertex1, Vertex2;
+
         public Edge(int Vertex1, int Vertex2)
         {
             this.Vertex1 = Vertex1;
