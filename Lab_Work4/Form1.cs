@@ -44,19 +44,19 @@ namespace Lab_Work4
             int countN = 0;
             for (int i = 0; i <= (mainString.Length - mainSearch.Length); i++)
             {
-                countN++;
+                //countN++;
                 int j;
                 for (j = 0; j < mainSearch.Length; j++)
                 {
                     countN++;
-                    if (mainString[i + j] != mainSearch[j]) { countN++; break; }
+                    if (mainString[i + j] != mainSearch[j]) {  break; }
                 }
                 if (j == mainSearch.Length)
                 {
                     richTextBox1.SelectionStart = i;
                     richTextBox1.SelectionLength = mainSearch.Length;
                     richTextBox1.SelectionColor = Color.Red;
-                    count++; countN++;
+                    count++; //countN++;
                 }
             }
             
@@ -74,15 +74,16 @@ namespace Lab_Work4
             int i = 0;
             while(i<mainString.Length)
             {
+                countN++;
                 if (mainSearch[j] == mainString[i]) 
                 {
-                    countN++;
+                    
                     j++;
                     i++;
                 }
                 if (j == mainSearch.Length)
                 {
-                    countN++;
+                    //countN++;
                     j = lp[j - 1];
                     count++;
                 }
