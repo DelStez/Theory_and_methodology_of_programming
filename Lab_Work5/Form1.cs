@@ -90,7 +90,10 @@ namespace Lab_Work5
                 status[k] = 0;
             foreach (Vertex q in Vertexlist)
             {
-                //if(q)
+                if (q.status != VertexStatus.Black)
+                {
+                    DFS(q);
+                }
             }
             //for (int i = 0; i < V.Count; i++)
             //{
@@ -113,9 +116,14 @@ namespace Lab_Work5
                 listMatrix.Items.Add(sOut);
             }
         }
-        private void DFS(int u, List<Edge> E, int[] color, string s)
+        private void DFS(Vertex vertex)
         {
-          
+            vertex.SetStatus(VertexStatus.Gray);
+            foreach (Vertex v in Vertexlist)
+            {
+                if (v.status == VertexStatus.White) DFS(v);
+            }
+            vertex.SetStatus(VertexStatus.Black);
             //if (u != endV)
                 
             //else

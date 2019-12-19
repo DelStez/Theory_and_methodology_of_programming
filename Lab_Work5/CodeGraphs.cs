@@ -10,8 +10,16 @@ namespace Lab_Work5
 {
     class Vertex
     {
+        //public List<Vertex> Vertexlist = new List<Vertex>();
+        public List<Vertex> Vertexlist = new List<Vertex>();
+        public List<Edge> Edgelist = new List<Edge>();
+
         public int x, y;
         public VertexStatus status = VertexStatus.White;
+        public void SetStatus(VertexStatus _status)
+        {
+            status = _status;
+        }
         public Vertex(int x, int y)
         {
             this.x = x;
