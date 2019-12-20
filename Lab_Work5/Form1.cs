@@ -75,8 +75,8 @@ namespace Lab_Work5
             workSpace.Image = G.GetMap();
             
         }
-       
 
+        public string z;
         private void getData_Click(object sender, EventArgs e)
         {
             // white = 0 grey = 1 black =2
@@ -90,10 +90,14 @@ namespace Lab_Work5
                 status[k] = 0;
             foreach (Vertex q in Vertexlist)
             {
+
                 if (q.status != VertexStatus.Black)
                 {
+                    z = "";
                     DFS(q);
+                    listPaths.Items.Add(z);
                 }
+                
             }
             //for (int i = 0; i < V.Count; i++)
             //{
@@ -119,7 +123,8 @@ namespace Lab_Work5
         private void DFS(Vertex vertex)
         {
             vertex.SetStatus(VertexStatus.Gray);
-            foreach (Vertex v in Vertexlist)
+            z += (Vertexlist.IndexOf(vertex)+1) + " ";
+            foreach (Vertex v in vertex.neighbors)
             {
                 if (v.status == VertexStatus.White) DFS(v);
             }

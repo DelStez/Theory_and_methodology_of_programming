@@ -10,10 +10,9 @@ namespace Lab_Work5
 {
     class Vertex
     {
-        //public List<Vertex> Vertexlist = new List<Vertex>();
-        public List<Vertex> Vertexlist = new List<Vertex>();
-        public List<Edge> Edgelist = new List<Edge>();
 
+        public List<Vertex> neighbors = new List<Vertex>();
+        public string name;
         public int x, y;
         public VertexStatus status = VertexStatus.White;
         public void SetStatus(VertexStatus _status)
@@ -25,6 +24,7 @@ namespace Lab_Work5
             this.x = x;
             this.y = y;
             this.status = VertexStatus.White;
+            
         }
     }
     class Edge
@@ -86,13 +86,15 @@ namespace Lab_Work5
             {
                 graphsM.DrawArc(PathDarkBlue, (V1.x - 2 * R), (V1.y - 2 * R), 2 * R, 2 * R, 90, 270);
                 point = new PointF(V1.x - (int)(2.75 * R), V1.y - (int)(2.75 * R));
-
+                V1.neighbors.Add(V2);
                 DrawVertex(V1.x, V1.y, (E.Vertex1 + 1).ToString());
             }
             else
             {
                 graphsM.DrawLine(PathDarkBlue, V1.x, V1.y, V2.x, V2.y);
                 point = new PointF((V1.x + V2.x) / 2, (V1.y + V2.y) / 2);
+                V1.neighbors.Add(V2);
+                //V2.neighbors.Add(V1);
                 DrawVertex(V1.x, V1.y, (E.Vertex1 + 1).ToString());
                 DrawVertex(V2.x, V2.y, (E.Vertex2 + 1).ToString());
             }
