@@ -85,31 +85,18 @@ namespace Lab_Work5
             listMatrix.Items.Clear();
             string sOut = "    ";
             G.fillAdjacencyMatrix(Vertexlist.Count, Edgelist, AMatrix);
-            int[] status = new int[Vertexlist.Count];
-            for (int k = 0; k < Vertexlist.Count; k++)
-                status[k] = 0;
+            foreach (Vertex f in Vertexlist) f.SetStatus(VertexStatus.White);
             foreach (Vertex q in Vertexlist)
             {
-
+                z = "";
+                listPaths.Items.Add("Для вершины " + (Vertexlist.IndexOf(q) + 1).ToString());
                 if (q.status != VertexStatus.Black)
                 {
-                    z = "";
                     DFS(q);
-                    listPaths.Items.Add(z);
                 }
-                
-            }
-            //for (int i = 0; i < V.Count; i++)
-            //{
-            //    string s = "";
-            //    w = 0;
-            //    if (color[i] == 0)
-            //        if (DFS(i, E, color,s))
-            //        {
+                foreach (Vertex f in Vertexlist) f.SetStatus(VertexStatus.White);
 
-            //            listPaths.Items.Add(s);
-            //        }
-            //}
+            }
             for (int i = 0; i < Vertexlist.Count; i++)
                 sOut += (i + 1) + " ";
             for (int i = 0; i < Vertexlist.Count; i++)
@@ -123,33 +110,18 @@ namespace Lab_Work5
         private void DFS(Vertex vertex)
         {
             vertex.SetStatus(VertexStatus.Gray);
-            z += (Vertexlist.IndexOf(vertex)+1) + " ";
+           
             foreach (Vertex v in vertex.neighbors)
             {
-                if (v.status == VertexStatus.White) DFS(v);
+                if (v.status == VertexStatus.White) { z += (Vertexlist.IndexOf(v) + 1) + " "; DFS(v); }
+                if(v.status == VertexStatus.Black)
+                { 
+                    if(z != "" )
+                        listPaths.Items.Add(z);
+                    z = "";
+                }
             }
             vertex.SetStatus(VertexStatus.Black);
-            //if (u != endV)
-                
-            //else
-            //{
-            //    listPaths.Items.Add(s);
-            //    return;
-            //}
-            //for (int w = 0; w < E.Count; w++)
-            //{
-            //    if (color[E[w].Vertex2] != 2 && E[w].Vertex1 == u)
-            //    {
-            //        DFSchain(E[w].Vertex2, endV, E, color, s + "-" + (E[w].Vertex2 + 1).ToString());
-            //        color[E[w].Vertex2] = 1;
-
-            //    }
-            //    else if (color[E[w].Vertex1] != 2 && E[w].Vertex2 == u)
-            //    {
-            //        DFSchain(E[w].Vertex1, endV, E, color, s + "-" + (E[w].Vertex1 + 1).ToString());
-            //        color[E[w].Vertex1] = 1;
-            //    }
-            //}
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
@@ -222,6 +194,7 @@ namespace Lab_Work5
                                 if (Edgelist[j].Vertex2 > i) Edgelist[j].Vertex2--;
                             }
                         }
+                        
                         Vertexlist.RemoveAt(i);
                         flag = true;
                         break;
