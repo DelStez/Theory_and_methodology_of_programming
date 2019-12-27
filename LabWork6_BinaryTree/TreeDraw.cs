@@ -73,7 +73,7 @@ namespace LabWork6_BinaryTree
                 StringFormat sf = new StringFormat(StringFormatFlags.DirectionRightToLeft);
                 sf.Alignment = StringAlignment.Center;
                 sf.LineAlignment = StringAlignment.Center;
-                gr.DrawString(node.KeyValue.ToString("00"), fo, Brushes.Black, rectangle, sf);
+                gr.DrawString(node.KeyValue.ToString(), fo, Brushes.Black, rectangle, sf);
                 
 
         }

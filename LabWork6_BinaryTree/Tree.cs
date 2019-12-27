@@ -8,8 +8,8 @@ namespace LabWork6_BinaryTree
 {
     public class Tree
     {
-        private Node root;
-        private int deepth;
+        public static Node root;
+        public int deepth;
 
 
 
@@ -55,7 +55,7 @@ namespace LabWork6_BinaryTree
 
         private Node CreateNode(int keyValue)
         {
-            Node currentNode = this.root;
+            Node currentNode = root;
             Node oldNode = null;
 
             while (currentNode != null)
