@@ -10,6 +10,8 @@ namespace LabWork6_BinaryTree
     public class Node
     {
         private Node parrent;
+        int X;
+        int Y;
         private Node leftNode;
         private Node rightNode;
         private int key;

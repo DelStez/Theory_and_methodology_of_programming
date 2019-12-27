@@ -15,14 +15,13 @@ namespace LabWork6_BinaryTree
     {
         public string key;
         public List<int> NodeList = new List<int>();
-        //Tree g;
+        
         public static double l = 50.0; 
         public static List<string> UsesVertex = new List<string>();
         public Form1()
         {
             InitializeComponent();
-            //g = new Tree(workSpace.Width, workSpace.Height);
-            //workSpace.Image = g.GetMap();
+            
         }
         private int[] ParseInput()
         {
@@ -45,25 +44,14 @@ namespace LabWork6_BinaryTree
 
         private void drawEdgeButton_Click(object sender, EventArgs e)
         {
-            //int Level = 1;
-            //int x = workSpace.Width /2;
-            //int y =  0;
-            //Node root = null;
-            
-            //Tree bst = new Tree(workSpace.Width, workSpace.Height);
-            //NodeList = textBox1.Text.ToString().Split().Select(int.Parse).ToList();
+   
+            NodeList = textBox1.Text.ToString().Split().Select(int.Parse).ToList();
             int[] input = ParseInput();
             Tree tree;
             tree = Factory.CreateOrganizedTree(input);
             TreeDraw td = new TreeDraw(2.0);
-            workSpace.Image = td.DrawTree(tree);
-            
-            //for (int i = 0; i < NodeList.Count; i++)
-            //{
-            //    root.value = NodeList[i];
-            //    //g.insert(root, x, y); 
-            //}
-            //workSpace.Image = g.GetMap();
+            workSpace.Image = td.DrawTree(tree, NodeList );
+          
         }
 
     

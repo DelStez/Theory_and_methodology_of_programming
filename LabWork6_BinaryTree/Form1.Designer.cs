@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.workSpace = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.getData = new System.Windows.Forms.Button();
@@ -51,26 +50,11 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workSpace)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.workSpace);
-            this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(169)))), ((int)(((byte)(175)))));
-            this.groupBox3.Location = new System.Drawing.Point(2, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(680, 482);
-            this.groupBox3.TabIndex = 6;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Рабочее поле";
             // 
             // workSpace
             // 
@@ -78,10 +62,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.workSpace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(237)))), ((int)(((byte)(236)))));
-            this.workSpace.Location = new System.Drawing.Point(6, 19);
+            this.workSpace.Location = new System.Drawing.Point(14, 25);
             this.workSpace.Name = "workSpace";
             this.workSpace.Size = new System.Drawing.Size(668, 457);
-            this.workSpace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.workSpace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.workSpace.TabIndex = 0;
             this.workSpace.TabStop = false;
             // 
@@ -325,13 +309,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1106, 512);
+            this.Controls.Add(this.workSpace);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.workSpace)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -344,8 +327,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.PictureBox workSpace;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button getData;
