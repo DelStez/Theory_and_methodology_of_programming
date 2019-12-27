@@ -1,93 +1,117 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LabWork6_BinaryTree
 {
-    class Node
+    public class Tree
     {
-        public int x, y;
-        public int value;
-        public Node left;
-        public Node right;
+        private Node root;
+        private int deepth;
 
-      
-        public Node(int x, int y)
+
+
+        public Tree()
         {
-            this.x = x;
-            this.y = y;
-
+            root = null;
+            deepth = 0;
         }
-    }
 
-    class Tree
-    {
-        Bitmap map;
-        Pen MainBlackPen;
-        Pen AddonRedPen;
-        Pen PathDarkBlue;
-        Graphics graphsM;
-        Font VertexName;
-        Brush br;
-        PointF point;
-        public int R = 10;
-        public Tree(int Widht, int Height)
+        public Node Root { get => root; set => root = value; }
+        public int Deepth
         {
-            map = new Bitmap(Widht, Height);
-            MainBlackPen = new Pen(Color.Black, 2);
-            AddonRedPen = new Pen(Color.Red, 2);
-            PathDarkBlue = new Pen(Color.DarkBlue, 5);
-            graphsM = Graphics.FromImage(map);
-            VertexName = new Font("Arial", 11);
-            br = Brushes.Black;
-        }
-        public Bitmap GetMap()
-        {
-            return map;
-        }
-        public Node insert(Node root, int v, int x, int y)
-        {
+            get => deepth;
 
-            if (root == null)
+            set
             {
-                root = new Node(x, y);
-                root.value = v;
-                graphsM.FillEllipse(Brushes.LightGray, x, y, 2 * R, 2 * R);
-                graphsM.DrawEllipse(MainBlackPen, x, y, 2 * R, 2 * R);
-                graphsM.DrawString(v.ToString(), VertexName, br, x, y);
-
+                if (Deepth < value)
+                {
+                    this.deepth = value;
+                }
             }
-            else if (v < root.value)
+        }
+
+        private Node SearchNode(int keyValue)
+        {
+            Node currentNode = this.Root;
+
+            while (currentNode != null && currentNode.KeyValue != keyValue)
             {
-               
-                root.left = insert(root.left, v, x+20 , y + 20);
-                graphsM.FillEllipse(Brushes.LightGray, x, y, 2 * R, 2 * R);
-                graphsM.DrawEllipse(MainBlackPen, x, y, 2 * R, 2 * R);
-                graphsM.DrawString(v.ToString(), VertexName, br, x+20, y+20);
+                int key = currentNode.KeyValue;
+                if (keyValue > key)
+                {
+                    currentNode = currentNode.RightNode;
+                }
+                else
+                {
+                    currentNode = currentNode.LeftNode;
+                }
+            }
+
+            return currentNode;
+        }
+
+        private Node CreateNode(int keyValue)
+        {
+            Node currentNode = this.root;
+            Node oldNode = null;
+
+            while (currentNode != null)
+            {
+                oldNode = currentNode;
+                if (keyValue < currentNode.KeyValue)
+                {
+                    currentNode = currentNode.LeftNode;
+                }
+                else
+                {
+                    currentNode = currentNode.RightNode;
+                }
+            }
+            return AddNode(keyValue, oldNode);
+        }
+
+        private Node AddNode(int keyValue, Node oldNode)
+        {
+            Node newNode = new Node(oldNode, keyValue);
+            if (oldNode == null)
+            {
+                Root = newNode;
+            }
+            else if (keyValue > oldNode.KeyValue)
+            {
+                oldNode.RightNode = newNode;
             }
             else
             {
-                root.right = insert(root.right, v, x-20, y+20);
-                graphsM.FillEllipse(Brushes.LightGray, x-20, y+20, 2 * R, 2 * R);
-                graphsM.DrawEllipse(MainBlackPen, x-20, y+20, 2 * R, 2 * R);
-                graphsM.DrawString(v.ToString(), VertexName, br, x-20, y+20);
+                oldNode.LeftNode = newNode;
             }
-
-            return root;
+            Deepth = newNode.Deepth;
+            return newNode;
         }
 
-        public void traverse(Node root)
+        private bool Exists(int keyValue, out Node foundNode)
         {
-            if (root == null)
-            {
-                return;
-            }
-
-            traverse(root.left);
-            traverse(root.right);
+            foundNode = SearchNode(keyValue);
+            return foundNode != null;
         }
+
+        public bool Exists(int keyValue)
+        {
+            return Exists(keyValue, out Node FoundNode);
+        }
+
+        public Node Add(int keyValue)
+        {
+            Node newNode;
+            if (Exists(keyValue, out newNode) == false)
+            {
+                newNode = CreateNode(keyValue);
+            }
+            return newNode;
+        }
+
     }
 }

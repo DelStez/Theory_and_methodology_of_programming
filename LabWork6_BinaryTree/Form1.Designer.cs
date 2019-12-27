@@ -80,8 +80,8 @@
             this.workSpace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(237)))), ((int)(((byte)(236)))));
             this.workSpace.Location = new System.Drawing.Point(6, 19);
             this.workSpace.Name = "workSpace";
-            this.workSpace.Size = new System.Drawing.Size(668, 457);
-            this.workSpace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.workSpace.Size = new System.Drawing.Size(551, 457);
+            this.workSpace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.workSpace.TabIndex = 0;
             this.workSpace.TabStop = false;
             // 
@@ -332,6 +332,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workSpace)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
