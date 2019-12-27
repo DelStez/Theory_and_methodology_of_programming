@@ -43,7 +43,8 @@ namespace LabWork6_BinaryTree
         {
             return this.Parrent == null;
         }
-       
+
     }
+}
 
    
