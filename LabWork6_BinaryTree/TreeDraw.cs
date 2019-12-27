@@ -54,7 +54,7 @@ namespace LabWork6_BinaryTree
                 {
                     int y = node.Deepth * size + 1 + marginTop;
                     int margin = ((int)Math.Pow(2, (maxDepth - node.Deepth)) * (size / 2));
-                //System.Diagnostics.Trace.WriteLine(String.Format("Key: {0}, Depth: {1},  X: {2}, Margin: {3}", node.KeyValue, node.Deepth, x, margin));
+               
                 if(node.RightNode != null) gr.DrawLine(new Pen(Color.Black), x + 20, y+10, x+25+margin, y+25);
                 if (node.LeftNode != null) gr.DrawLine(new Pen(Color.Black), x + 20, y + 10, x + 25 -margin, y + 25);
                 CreateNode(node, gr, x, y);
