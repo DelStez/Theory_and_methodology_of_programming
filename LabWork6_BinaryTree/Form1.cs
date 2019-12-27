@@ -46,7 +46,7 @@ namespace LabWork6_BinaryTree
             Tree tree;
             tree = Factory.CreateOrganizedTree(input);
             TreeDraw td = new TreeDraw(2.0);
-            workSpace.Image = td.DrawTree(tree, NodeList);
+            workSpace.Image = td.DrawTree(tree);
         }
         private void drawEdgeButton_Click(object sender, EventArgs e)
         {
@@ -110,7 +110,7 @@ namespace LabWork6_BinaryTree
                 }
                 else
                 {
-                    return Find(key, parent.LeftNode);
+                    return Find(key, parent.RightNode);
                 }
             }
             return null;
@@ -118,6 +118,22 @@ namespace LabWork6_BinaryTree
         private void button1_Click(object sender, EventArgs e)
         {
             Node node = Find(Convert.ToInt32(textBox2.Text));
+            workSpace.Image = DrawKey(node, node.Parrent);
+            label11.Text = node.Parrent.KeyValue.ToString();
+            label10.Text = "";
+            if (node.LeftNode != null) label10.Text += node.LeftNode.KeyValue.ToString()+" ";
+            if(node.RightNode !=null) label10.Text += node.RightNode.KeyValue.ToString() + " ";
+
+        }
+        public Bitmap DrawKey(Node key, Node parrent)
+        {
+            Tree tree;
+            int[] input = ParseInput();
+            tree = Factory.CreateOrganizedTree(input);
+            TreeDraw td = new TreeDraw(2.0);
+            var im = td.DrawTree(tree);
+            im = td.KeyNode(im, key, Tree.root, tree);
+            return im;
         }
 
 

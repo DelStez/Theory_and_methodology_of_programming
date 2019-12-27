@@ -17,28 +17,58 @@ namespace LabWork6_BinaryTree
             private int marginLeft = 10;
             Font fo;
 
-            public TreeDraw(double scale)
-            {
-                factor = scale;
-                size = (int)(10 * factor);
-                fo = new Font("Aerie", (int)(5 * factor));
-            }
-            public Bitmap DrawTree(Tree tree, List<int> NodeList)
-            {
-                Bitmap img = new Bitmap(ImageWidth(tree), ImageHeight(tree));
-                Graphics gr = Graphics.FromImage(img);
-                gr.Clear(Color.White);
-                gr.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                Node root = tree.Root;
+        public TreeDraw(double scale)
+        {
+            factor = scale;
+            size = (int)(10 * factor);
+            fo = new Font("Aerie", (int)(5 * factor));
+        }
+        public Bitmap DrawTree(Tree tree)
+        {
+            Bitmap img = new Bitmap(ImageWidth(tree), ImageHeight(tree));
+            Graphics gr = Graphics.FromImage(img);
+            gr.Clear(Color.White);
+            gr.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            Node root = tree.Root;
+            int startPos = ((int)Math.Pow(2, tree.Deepth) * size) - size;
+            DrawNode(root, startPos, gr, tree.Deepth);
+            gr.Dispose();
+            return img;
+        }
+        public Bitmap KeyNode(Bitmap im, Node key, Node parrent, Tree tree)
+        {
+           
                 int startPos = ((int)Math.Pow(2, tree.Deepth) * size) - size;
-                DrawNode(root, startPos, gr, tree.Deepth);
-               
-                gr.Dispose();
-                return img;
-            }
+                Graphics gr = Graphics.FromImage(im);
+            gr.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            KeyNodeDraw(parrent, startPos, tree.Deepth, key,gr);
+           
+            return im;
+        }
+        public void KeyNodeDraw(Node parrent, int x, int maxDepth, Node key, Graphics gr)
+        {
+            if (parrent != null)
+            {
+                int y = parrent.Deepth * size + 1 + marginTop;
+                int margin = ((int)Math.Pow(2, (maxDepth - parrent.Deepth)) * (size / 2));
+                if (key.KeyValue == parrent.KeyValue)
+                {
 
-            private int ImageHeight(Tree tree)
+                    drawSelect(parrent, gr, x, y);
+                }
+                if (key.KeyValue < parrent.KeyValue  )
+                {
+                    KeyNodeDraw(parrent.LeftNode, x - margin, maxDepth, key, gr);
+                }
+                else
+                {
+                    KeyNodeDraw(parrent.RightNode, x + margin, maxDepth, key, gr);
+                }
+            }
+        }
+        private int ImageHeight(Tree tree)
             {
                 return (tree.Deepth + 1) * size + (marginTop * 2);
             }
@@ -64,7 +94,7 @@ namespace LabWork6_BinaryTree
                 }
             }
 
-     
+        
         private void CreateNode(Node node, Graphics gr, int x, int y)
             {
             gr.FillEllipse(Brushes.White, x + marginLeft, y, size, size);
@@ -77,6 +107,16 @@ namespace LabWork6_BinaryTree
                 
 
         }
-        
+        private void drawSelect(Node node, Graphics gr, int x, int y)
+        {
+            gr.FillEllipse(Brushes.White, x + marginLeft, y, size, size);
+            gr.DrawEllipse(new Pen(Color.Red, (float)(1 * factor)), x + marginLeft, y, size, size);
+            Rectangle rectangle = new Rectangle(x + marginLeft, y, size, size);
+            StringFormat sf = new StringFormat(StringFormatFlags.DirectionRightToLeft);
+            sf.Alignment = StringAlignment.Center;
+            sf.LineAlignment = StringAlignment.Center;
+            gr.DrawString(node.KeyValue.ToString(), fo, Brushes.Black, rectangle, sf);
+        }
+
     }
 }
