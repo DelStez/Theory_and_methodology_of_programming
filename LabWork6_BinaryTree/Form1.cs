@@ -13,28 +13,37 @@ namespace LabWork6_BinaryTree
     public partial class Form1 : Form
     {
 
-        public static List<int> UsesVertex = new List<int>();
+        public List<int> NodeList = new List<int>();
+        Tree g;
+        public static double l = 50.0; 
+        public static List<string> UsesVertex = new List<string>();
         public Form1()
         {
             InitializeComponent();
+            g = new Tree(workSpace.Width, workSpace.Height);
+            workSpace.Image = g.GetMap();
         }
 
         private void drawEdgeButton_Click(object sender, EventArgs e)
         {
-            int numberVertex = Convert.ToInt32(textBox1.Text);
-            int y = 0;
-            while (y < numberVertex) {dataGridView1.Rows.Add(); y++;}
-
+            int Level = 1;
+            int x = workSpace.Width /2;
+            int y =  0;
+            Node root = null;
+            //Tree bst = new Tree(workSpace.Width, workSpace.Height);
+            NodeList = textBox1.Text.ToString().Split().Select(int.Parse).ToList();
+            for (int i = 0; i < NodeList.Count; i++)
+            {
+                root = g.insert(root, NodeList[i], x, y); 
+            }
+            workSpace.Image = g.GetMap();
         }
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+    
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            int temValues = Convert.ToInt32(dataGridView1.CurrentCell.Value.ToString());
-            if (UsesVertex.Contains(temValues)) dataGridView1.CurrentCell.Value = "null";
-            else 
-            {
-                UsesVertex.Add(temValues);
-            }
+            if (textBox1.Text.Length == 0) drawEdgeButton.Enabled = false;
+            else drawEdgeButton.Enabled = true;
         }
     }
 }
