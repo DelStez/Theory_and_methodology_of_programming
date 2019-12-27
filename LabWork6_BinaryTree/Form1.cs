@@ -54,7 +54,7 @@ namespace LabWork6_BinaryTree
             //NodeList = textBox1.Text.ToString().Split().Select(int.Parse).ToList();
             int[] input = ParseInput();
             Tree tree;
-            tree = Factory.CreateOrganizedTree();
+            tree = Factory.CreateOrganizedTree(input);
             TreeDraw td = new TreeDraw(2.0);
             workSpace.Image = td.DrawTree(tree);
             

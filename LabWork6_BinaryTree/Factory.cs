@@ -8,17 +8,18 @@ namespace LabWork6_BinaryTree
 {
     class Factory
     {
-        public static Tree CreateOrganizedTree(params int[] values)
+        public static Tree CreateOrganizedTree(params int[] keys)
         {
-            if (values == null)
+            if (keys == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("keys");
             }
 
-            var list = values.ToList();
-            list.Sort();
             Tree tree = new Tree();
-            CreateOrganizedNode(list.ToArray(), 0, list.Count - 1, null, tree);
+            foreach (int key in keys)
+            {
+                tree.Add(key);
+            }
             return tree;
         }
         private static Node CreateOrganizedNode(int[] a, int left, int right, Node parrent, Tree tree)

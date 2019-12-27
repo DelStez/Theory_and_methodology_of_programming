@@ -12,15 +12,15 @@ namespace LabWork6_BinaryTree
         
             private double factor;
             private int size;
-            private int marginTop = 20;
-            private int marginLeft = 20;
+            private int marginTop = 10;
+            private int marginLeft = 10;
             Font fo;
 
             public TreeDraw(double scale)
             {
                 factor = scale;
-                size = (int)(40 * factor);
-                fo = new Font("Aerie", (int)(11 * factor));
+                size = (int)(10 * factor);
+                fo = new Font("Aerie", (int)(5 * factor));
             }
             public Bitmap DrawTree(Tree tree)
             {
