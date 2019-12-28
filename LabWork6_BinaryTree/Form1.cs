@@ -123,7 +123,29 @@ namespace LabWork6_BinaryTree
             label10.Text = "";
             if (node.LeftNode != null) label10.Text += node.LeftNode.KeyValue.ToString()+" ";
             if(node.RightNode !=null) label10.Text += node.RightNode.KeyValue.ToString() + " ";
+            label4.Text = Max(Tree.root);
+            label6.Text = Min(Tree.root);
 
+        }
+        public string Max(Node node)
+        {
+            int max = node.KeyValue;
+            while (node.RightNode != null)
+            {
+                max = node.RightNode.KeyValue;
+                node = node.RightNode;
+            }
+            return max.ToString();
+        }
+        public string Min(Node node)
+        {
+            int min = node.KeyValue;
+            while (node.LeftNode != null)
+            {
+                min = node.LeftNode.KeyValue;
+                node = node.LeftNode;
+            }
+            return min.ToString();
         }
         public Bitmap DrawKey(Node key, Node parrent)
         {
