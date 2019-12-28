@@ -166,7 +166,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(182, 20);
             this.button2.TabIndex = 9;
-            this.button2.Text = "Очистить";
+            this.button2.Text = "Удалить";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -240,6 +240,7 @@
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Поиск";
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // label11
             // 
@@ -297,10 +298,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(61)))), ((int)(((byte)(59)))));
             this.ClientSize = new System.Drawing.Size(1106, 512);
             this.Controls.Add(this.workSpace);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
+            this.ForeColor = System.Drawing.Color.Black;
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.workSpace)).EndInit();

@@ -82,10 +82,11 @@ namespace LabWork6_BinaryTree
             if (NodeList.Contains(keyDelete))
             {
                 NodeList.Remove(keyDelete);
-                textBox1.Text = textBox1.Text.Replace(keyDelete.ToString(), "").Replace("  "," ");
+                
+                textBox1.Text = string.Join(" ", NodeList.ToArray());
                 if (NodeList.Count !=0 ) 
                 {
-                    if (textBox1.Text[textBox1.Text.Length - 1] == ' ') textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1, 1);
+                    
                     int[] input = ParseInput();
                     Draw(input);
                 }
@@ -117,17 +118,56 @@ namespace LabWork6_BinaryTree
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            Node node = Find(Convert.ToInt32(textBox2.Text));
-            workSpace.Image = DrawKey(node, node.Parrent);
-            label11.Text = node.Parrent.KeyValue.ToString();
             label10.Text = "";
-            if (node.LeftNode != null) label10.Text += node.LeftNode.KeyValue.ToString()+" ";
-            if(node.RightNode !=null) label10.Text += node.RightNode.KeyValue.ToString() + " ";
-            label4.Text = Max(Tree.root);
-            label6.Text = Min(Tree.root);
+            label11.Text = "";
+            label4.Text = "";
+            label6.Text = "";
+            Node node = Find(Convert.ToInt32(textBox2.Text));
+            if (node != null)
+            {
+                workSpace.Image = DrawKey(node, node.Parrent);
+                //label11.Text = node.Parrent.KeyValue.ToString();
+                label10.Text = "";
+                label11.Text += PredSuccessor(node) + " ";
+                label10.Text += Successor(node) + " ";
+                label4.Text = Max(Tree.root).ToString();
+                label6.Text = Min(Tree.root).ToString();
+            }
+
 
         }
-        public string Max(Node node)
+        public int Successor(Node node)
+        {
+            Node x = node;
+            if (node.RightNode != null)
+                return Min(node.RightNode);
+            Node y = node.Parrent;
+            while (y != null && x == node.RightNode)
+            {
+                x = y;
+                y = node.Parrent;
+            }
+            return y.KeyValue;
+        }
+        public int PredSuccessor(Node node)
+        {
+            Node x = node;
+            if (node.LeftNode != null)
+                return Max(node.LeftNode);
+            Node y = node.Parrent;
+            while (y != null && x == node.LeftNode)
+            {
+                x = y;
+                y = y.Parrent;
+            }
+            if(y == null)
+            {
+                return -1;
+            }
+            return y.KeyValue;
+
+        }
+        public int Max(Node node)
         {
             int max = node.KeyValue;
             while (node.RightNode != null)
@@ -135,9 +175,9 @@ namespace LabWork6_BinaryTree
                 max = node.RightNode.KeyValue;
                 node = node.RightNode;
             }
-            return max.ToString();
+            return max;
         }
-        public string Min(Node node)
+        public int Min(Node node)
         {
             int min = node.KeyValue;
             while (node.LeftNode != null)
@@ -145,7 +185,7 @@ namespace LabWork6_BinaryTree
                 min = node.LeftNode.KeyValue;
                 node = node.LeftNode;
             }
-            return min.ToString();
+            return min;
         }
         public Bitmap DrawKey(Node key, Node parrent)
         {
@@ -158,6 +198,9 @@ namespace LabWork6_BinaryTree
             return im;
         }
 
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
 
+        }
     }
 }

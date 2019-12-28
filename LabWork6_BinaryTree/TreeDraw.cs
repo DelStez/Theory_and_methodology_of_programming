@@ -21,7 +21,7 @@ namespace LabWork6_BinaryTree
         {
             factor = scale;
             size = (int)(10 * factor);
-            fo = new Font("Aerie", (int)(5 * factor));
+            fo = new Font("Aerie", (int)(3 * factor));
         }
         public Bitmap DrawTree(Tree tree)
         {
